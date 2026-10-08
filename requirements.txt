@@ -1,3 +1,1 @@
-python-telegram-bot
-flask
-requests
+photos = await context.bot.get_user_profile_photos(user_id=user_id, limit=1)
