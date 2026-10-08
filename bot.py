@@ -28,7 +28,7 @@ def run_flask():
 # ⚙ AAPKI SETTINGS:
 # ==========================================
 TELEGRAM_BOT_TOKEN = "8813015253:AAEnIagO2op3AOERsF3I7ZjHpy96FiBmZNs"
-BOT_NAME = "𝐌.𝐊  𝐓𝐑𝐀𝐃𝐄𝐑 𝐁𝐎𝐓"
+BOT_NAME = "𝐌.𝐊 𝐓𝐑𝐀𝐃𝐄𝐑 𝐁𝐎𝐓"
 BOT_USERNAME = "@MK_TRADER02_BOT"
 LOG_CHANNEL_ID = -1003724080321  # Channel ID ke sath -100 lagana zaroori hai
 
@@ -36,6 +36,7 @@ CHANNEL_LINK = "https://t.me/+PkYMM8tEvH05YmE0"
 PHOTO_URL = "https://i.postimg.cc/4nRdvZ79/file-00000000f56082118b205bedf79869e1.png"
 # ==========================================
 
+# Safe Counter Function
 COUNTER_FILE = "request_counter.txt"
 
 def get_next_request_count():
@@ -53,6 +54,7 @@ def get_next_request_count():
         print(f"Counter error: {e}")
         return 1
 
+# Log Channel Function
 async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT_TYPE, source_action: str):
     try:
         user = update.effective_user if update.effective_user else getattr(update.chat_join_request, 'from_user', None)
@@ -65,14 +67,20 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
         last_name = user.last_name or ""
         full_name = f"{first_name} {last_name}".strip()
         
-        channel_name = "N/A"
-        if update.chat_join_request:
-            channel_name = update.chat_join_request.chat.title or "Unknown Channel"
-        elif update.effective_chat and update.effective_chat.type in ['group', 'supergroup', 'channel']:
-            channel_name = update.effective_chat.title
+        # Channel name fetch karna
+        channel_name = "N/A (Direct /start)"
+        try:
+            if update.chat_join_request and update.chat_join_request.chat:
+                channel_name = update.chat_join_request.chat.title or "Unknown Channel"
+            elif update.effective_chat and update.effective_chat.type in ['group', 'supergroup', 'channel']:
+                channel_name = update.effective_chat.title
+        except Exception:
+            pass
         
+        # Get request number count
         req_number = get_next_request_count() if "Join Request" in source_action else "N/A"
         
+        # Exact Pakistan Time (UTC + 5 hours) fix
         pkt_time = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         current_time = pkt_time.strftime("%d %b %Y, %I:%M %p")
         
@@ -91,7 +99,6 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
             f"━━━━━━━━━━━━━━━━━━━━━━━━━━"
         )
         
-        sent_success = False
         try:
             photos = await context.bot.get_user_profile_photos(user_id=user_id, limit=1)
             if photos.total_count > 0:
@@ -101,11 +108,13 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
                     photo=file_id,
                     caption=log_msg
                 )
-                sent_success = True
+            else:
+                await context.bot.send_message(
+                    chat_id=LOG_CHANNEL_ID,
+                    text=log_msg + "\n\n*(User has no Profile Picture)*"
+                )
         except Exception as inner_e:
-            print(f"Photo sending warning: {inner_e}")
-
-        if not sent_success:
+            print(f"Photo sending error to log channel: {inner_e}")
             await context.bot.send_message(
                 chat_id=LOG_CHANNEL_ID,
                 text=log_msg
@@ -189,7 +198,7 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
-    await send_data_to_log_channel(update, context, "Bot ko /start Command bheji")
+    await send_data_to_log_channel(update, context, "Bot /start Command")
     await send_both_posts(user.id, user, context)
 
 def main():
@@ -207,6 +216,8 @@ def main():
     application.add_handler(CommandHandler("start", start_command))
 
     print(f"{BOT_NAME} ({BOT_USERNAME}) is running successfully with Log Channel...")
+    
+    # Simple and direct polling command without event loop crashes
     application.run_polling()
 
 if __name__ == '__main__':
