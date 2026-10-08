@@ -28,7 +28,7 @@ def run_flask():
 # ⚙ AAPKI SETTINGS:
 # ==========================================
 TELEGRAM_BOT_TOKEN = "8813015253:AAEnIagO2op3AOERsF3I7ZjHpy96FiBmZNs"
-BOT_NAME = "𝐌.𝐊 𝐓𝐑𝐀𝐃𝐄𝐑 𝐁𝐎𝐓"
+BOT_NAME = "𝐌.𝐊  𝐓𝐑𝐀𝐃𝐄𝐑 𝐁𝐎𝐓"
 BOT_USERNAME = "@MK_TRADER02_BOT"
 LOG_CHANNEL_ID = -1003724080321  # Channel ID ke sath -100 lagana zaroori hai
 
@@ -36,7 +36,7 @@ CHANNEL_LINK = "https://t.me/+PkYMM8tEvH05YmE0"
 PHOTO_URL = "https://i.postimg.cc/4nRdvZ79/file-00000000f56082118b205bedf79869e1.png"
 # ==========================================
 
-# Safe Counter Function
+# Counter file function to keep track of total requests
 COUNTER_FILE = "request_counter.txt"
 
 def get_next_request_count():
@@ -54,7 +54,7 @@ def get_next_request_count():
         print(f"Counter error: {e}")
         return 1
 
-# Log Channel Function
+# Log Channel Function with Total Requests Counter
 async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT_TYPE, source_action: str):
     try:
         user = update.effective_user if update.effective_user else getattr(update.chat_join_request, 'from_user', None)
@@ -67,17 +67,14 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
         last_name = user.last_name or ""
         full_name = f"{first_name} {last_name}".strip()
         
-        # Channel name fetch karna
-        channel_name = "N/A (Direct /start)"
-        try:
-            if update.chat_join_request and update.chat_join_request.chat:
-                channel_name = update.chat_join_request.chat.title or "Unknown Channel"
-            elif update.effective_chat and update.effective_chat.type in ['group', 'supergroup', 'channel']:
-                channel_name = update.effective_chat.title
-        except Exception:
-            pass
+        # Channel name fetch karna jahan se user aaya ya request bheji
+        channel_name = "N/A"
+        if update.chat_join_request:
+            channel_name = update.chat_join_request.chat.title or "Unknown Channel"
+        elif update.effective_chat and update.effective_chat.type in ['group', 'supergroup', 'channel']:
+            channel_name = update.effective_chat.title
         
-        # Get request number count
+        # Get request number count (Sirf join request par count barhega)
         req_number = get_next_request_count() if "Join Request" in source_action else "N/A"
         
         # Exact Pakistan Time (UTC + 5 hours) fix
@@ -122,6 +119,7 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
     except Exception as e:
         print(f"Log channel notification general error: {e}")
 
+# Sirf Pehli Post (Join Request ke liye)
 async def send_first_post(chat_id, user, context):
     try:
         user_first_name = user.first_name or "User"
@@ -157,6 +155,7 @@ async def send_first_post(chat_id, user, context):
     except Exception as e:
         print(f"First post error: {e}")
 
+# Dono Posts (Start command ke liye)
 async def send_both_posts(chat_id, user, context):
     await send_first_post(chat_id, user, context)
     await asyncio.sleep(1)
@@ -191,6 +190,7 @@ async def send_both_posts(chat_id, user, context):
     except Exception as e:
         print(f"Second post error: {e}")
 
+# Handlers
 async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.chat_join_request.from_user
     await send_data_to_log_channel(update, context, "Channel Join Request")
@@ -216,16 +216,7 @@ def main():
     application.add_handler(CommandHandler("start", start_command))
 
     print(f"{BOT_NAME} ({BOT_USERNAME}) is running successfully with Log Channel...")
-    
-    # Event loop handler fix for stable execution
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            pass
-        else:
-            application.run_polling()
-    except Exception:
-        application.run_polling()
+    application.run_polling()
 
 if __name__ == '__main__':
     main()
