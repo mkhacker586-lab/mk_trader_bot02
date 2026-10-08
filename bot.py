@@ -27,7 +27,7 @@ def run_flask():
 # ==========================================
 # ⚙ AAPKI SETTINGS:
 # ==========================================
-TELEGRAM_BOT_TOKEN = "8813015253:AAEnIagO2op3AOERsF3I7ZjHpy96FiBmZNs"
+TELEGRAM_BOT_TOKEN = "8295130556:AAG_2e4SwSe13FOmCJx-7rohT6DU21kVcMQ"
 BOT_NAME = "𝐌.𝐊 𝐓𝐑𝐀𝐃𝐄𝐑 𝐁𝐎𝐓"
 BOT_USERNAME = "@MK_TRADER02_BOT"
 LOG_CHANNEL_ID = -1003724080321  # Channel ID ke sath -100 lagana zaroori hai
