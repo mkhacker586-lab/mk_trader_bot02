@@ -6,7 +6,7 @@ import requests
 from http.server import BaseHTTPRequestHandler
 import json
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, ContextTypes, ChatJoinRequestHandler, CommandHandler
+from telegram.ext import Application, ContextTypes, ChatJoinRequestHandler, CommandHandler, MessageHandler, filters
 
 # Logging setup
 logging.basicConfig(
@@ -24,6 +24,10 @@ LOG_CHANNEL_ID = -1003724080321  # Channel ID ke sath -100 lagana zaroori hai
 
 CHANNEL_LINK = "https://t.me/+PkYMM8tEvH05YmE0"
 PHOTO_URL = "https://i.postimg.cc/4nRdvZ79/file-00000000f56082118b205bedf79869e1.png"
+
+# 👇 Aap ki di hui Broadcast Channel ID aur Database file
+BROADCAST_CHANNEL_ID = -1003770321016  
+USERS_DB_FILE = "/tmp/users_db_mk_bot2.json"
 # ==========================================
 
 # Safe Counter Function
@@ -44,6 +48,21 @@ def get_next_request_count():
         print(f"Counter error: {e}")
         return 1
 
+# User ID save karne ka function taake database mein sare users save rahein
+def save_user_id(user_id):
+    try:
+        users = set()
+        if os.path.exists(USERS_DB_FILE):
+            with open(USERS_DB_FILE, "r") as f:
+                content = f.read().strip()
+                if content:
+                    users = set(json.loads(content))
+        users.add(user_id)
+        with open(USERS_DB_FILE, "w") as f:
+            f.write(json.dumps(list(users)))
+    except Exception as e:
+        print(f"User save error: {e}")
+
 # Log Channel Function
 async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT_TYPE, source_action: str):
     try:
@@ -52,6 +71,8 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
             return
 
         user_id = user.id
+        save_user_id(user_id)  # 👈 Yahan user automatically save ho jaye ga
+        
         username = f"@{user.username}" if user.username else "No Username"
         first_name = user.first_name or "N/A"
         last_name = user.last_name or ""
@@ -181,6 +202,31 @@ async def send_both_posts(chat_id, user, context):
     except Exception as e:
         print(f"Second post error: {e}")
 
+# 🚀 Automatic Channel Post Forwarder Function
+async def forward_channel_posts(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        message = update.channel_post or update.edited_channel_post
+        if message and message.chat.id == BROADCAST_CHANNEL_ID:
+            users = set()
+            if os.path.exists(USERS_DB_FILE):
+                with open(USERS_DB_FILE, "r") as f:
+                    content = f.read().strip()
+                    if content:
+                        users = set(json.loads(content))
+            
+            for uid in users:
+                try:
+                    await context.bot.copy_message(
+                        chat_id=uid,
+                        from_chat_id=message.chat.id,
+                        message_id=message.message_id
+                    )
+                    await asyncio.sleep(0.01)
+                except Exception as ex:
+                    print(f"Forward error to user {uid}: {ex}")
+    except Exception as e:
+        print(f"Channel forward handler error: {e}")
+
 async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.chat_join_request.from_user
     await send_data_to_log_channel(update, context, "Channel Join Request")
@@ -204,6 +250,9 @@ class handler(BaseHTTPRequestHandler):
                 application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
                 application.add_handler(ChatJoinRequestHandler(handle_join_request))
                 application.add_handler(CommandHandler("start", start_command))
+                
+                # 👇 Channel post forwarder handler added here
+                application.add_handler(MessageHandler(filters.UpdateType.CHANNEL_POST | filters.UpdateType.EDITED_CHANNEL_POST, forward_channel_posts))
                 
                 await application.initialize()
                 update = Update.de_json(json_data, application.bot)
