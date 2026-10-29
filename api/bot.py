@@ -174,15 +174,10 @@ async def send_data_to_log_channel(update: Update, context: ContextTypes.DEFAULT
         print(f"Log error: {e}")
 
 # ==========================================
-# 📌 MAIN MENU BUTTONS (With Top Featured Buttons)
+# 📌 MAIN MENU BUTTONS (Clean & Original Hub)
 # ==========================================
 def main_menu_keyboard():
     keyboard = [
-        # 🚀 Top Featured Buttons Requested by User
-        [InlineKeyboardButton("🚀 𝐒𝐓𝐀𝐑𝐓 𝐓𝐇𝐄 𝐁𝐎𝐓", callback_data="back_home")],
-        [InlineKeyboardButton("📢 𝐉𝐎𝐈𝐍 𝐌.𝐊 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋 𝐂𝐇𝐀𝐍𝐍𝐄𝐋", url=CHANNEL_LINK)],
-        [InlineKeyboardButton("💬 𝐂𝐎𝐍𝐓𝐀𝐂𝐓 𝐎𝐖𝐍𝐄𝐑 👑", url=ADMIN_USERNAME)],
-        # Regular Menu Hub
         [InlineKeyboardButton("📊 𝐎𝐓𝐂 𝐋𝐢𝐯𝐞 𝐒𝐢𝐠𝐧𝐚𝐥𝐬", callback_data="otc_live"), InlineKeyboardButton("📈 𝐀𝐧𝐚𝐥𝐲𝐬𝐢𝐬 𝐒𝐢𝐠𝐧𝐚𝐥𝐬", callback_data="analysis_signals")],
         [InlineKeyboardButton("🔮 𝐅𝐮𝐭𝐮𝐫𝐞 𝐒𝐢𝐠𝐧𝐚𝐥𝐬", callback_data="future_signals"), InlineKeyboardButton("📋 𝐅𝐮𝐭𝐮𝐫𝐞 𝐋𝐢𝐬𝐭", callback_data="future_list")],
         [InlineKeyboardButton("👤 𝐏𝐞𝐫𝐬𝐨𝐧𝐚𝐥 𝐒𝐞𝐬𝐬𝐢𝐨𝐧𝐬", callback_data="personal_sessions"), InlineKeyboardButton("💸 𝐋𝐨𝐬𝐬 𝐑𝐞𝐜𝐨𝐯𝐞𝐫𝐲 𝐒𝐞𝐬𝐬𝐢𝐨𝐧𝐬", callback_data="loss_recovery")],
@@ -244,6 +239,18 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"👇 **𝐒𝐄𝐋𝐄𝐂𝐓 𝐘𝐎𝐔𝐑 𝐃𝐄𝐒𝐈𝐑𝐄𝐃 𝐎𝐏𝐓𝐈𝐎𝐍:**"
     )
     await update.message.reply_text(welcome_text, reply_markup=main_menu_keyboard(), parse_mode="Markdown", disable_web_page_preview=True)
+
+async def channel_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    resp_text = (
+        f"👑 **{BOT_NAME}** 👑\n\n"
+        f"📢 **𝐉𝐎𝐈𝐍 𝐌.𝐊 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋 𝐂𝐇𝐀𝐍𝐍𝐄𝐋** 📢\n\n"
+        f"Click the button below to join our official premium Telegram channel for regular updates and announcements:"
+    )
+    kb = InlineKeyboardMarkup([
+        [InlineKeyboardButton("📢 𝐉𝐎𝐈𝐍 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋 𝐂𝐇𝐀𝐍𝐍𝐄𝐋", url=CHANNEL_LINK)],
+        [InlineKeyboardButton("🔙 𝐌𝐀𝐈𝐍 𝐌𝐄𝐍𝐔", callback_data="back_home")]
+    ])
+    await update.message.reply_text(resp_text, reply_markup=kb, parse_mode="Markdown", disable_web_page_preview=True)
 
 async def signals_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     resp_text = (
@@ -736,13 +743,14 @@ class handler(BaseHTTPRequestHandler):
             async def process():
                 application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
                 
-                # Set Bot Menu Commands (Left-side menu button)
+                # Set Bot Menu Commands (Left-side menu button with exact fancy fonts requested)
                 try:
                     await application.bot.set_my_commands([
-                        BotCommand("start", "🚀 Start the bot & open dashboard"),
-                        BotCommand("signals", "📊 Get Live OTC Signals"),
-                        BotCommand("vip", "💎 Join VIP Program"),
-                        BotCommand("contact", "💬 Contact owner")
+                        BotCommand("start", "🚀 𝐒𝐓𝐀𝐑𝐓 𝐓𝐇𝐄 𝐁𝐎𝐓 & 𝐎𝐏𝐄𝐍 𝐃𝐀𝐒𝐇𝐁𝐎𝐀𝐑𝐃"),
+                        BotCommand("channel", "📢 𝐉𝐎𝐈𝐍 𝐌.𝐊 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋 𝐂𝐇𝐀𝐍𝐍𝐄𝐋"),
+                        BotCommand("contact", "💬 𝐂𝐎𝐍𝐓𝐀𝐂𝐓 𝐎𝐖𝐍𝐄𝐑 👑"),
+                        BotCommand("signals", "📊 𝐆𝐄𝐓 𝐋𝐈𝐕𝐄 𝐎𝐓𝐂 𝐒𝐈𝐆𝐍𝐀𝐋𝐒"),
+                        BotCommand("vip", "💎 𝐉𝐎𝐈𝐍 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐕𝐈𝐏")
                     ])
                 except Exception as cmd_err:
                     print(f"Set commands error: {cmd_err}")
@@ -758,6 +766,7 @@ class handler(BaseHTTPRequestHandler):
                 
                 application.add_handler(ChatJoinRequestHandler(handle_join_request))
                 application.add_handler(CommandHandler("start", start_command))
+                application.add_handler(CommandHandler("channel", channel_command))
                 application.add_handler(CommandHandler("signals", signals_command))
                 application.add_handler(CommandHandler("vip", vip_command))
                 application.add_handler(CommandHandler("contact", contact_command))
