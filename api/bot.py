@@ -48,7 +48,7 @@ def get_join_post_caption(user_first_name):
         f"👑 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 {BRAND_NAME} 🖤\n\n"
         f"💎 𝐖𝐇𝐀𝐓 𝐘𝐎𝐔'𝐋𝐋 𝐆𝐄𝐓:\n"
         f"✅ 𝟏𝟎 𝐅𝐫𝐞𝐞 𝐓𝐫𝐚𝐝𝐢𝐧𝐠 𝐒𝐢𝐠𝐧𝐚𝐥𝐬 📊\n"
-        f"📈 𝐌𝐚𝐫𝐤𝐞𝐭 𝐀𝐧𝐚𝐥ysis & 𝐒𝐞𝐭𝐮𝐩𝐬 🎯\n"
+        f"📈 𝐌𝐚𝐫𝐤𝐞𝐭 𝐀𝐧𝐚𝐥𝐲𝐬𝐢𝐬 & 𝐒𝐞𝐭𝐮𝐩𝐬 🎯\n"
         f"📉 𝐓𝐫𝐚𝐝𝐢𝐧𝐠 𝐒𝐭𝐫𝐚𝐭𝐞𝐠𝐢𝐞𝐬 & 𝐈𝐧𝐬𝐢𝐠𝐡𝐭𝐬 💡\n"
         f"💎 𝐕𝐈𝐏 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 🚀\n\n"
         f"🚀 𝐉𝐎𝐈𝐍 𝐍𝐎𝐖 — 𝐒𝐓𝐀𝐘 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃!\n\n"
@@ -252,7 +252,7 @@ async def channel_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"✨ **𝐒𝐭𝐚𝐲 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 • 𝐒𝐭𝐚𝐲 𝐈𝐧𝐟𝐨𝐫𝐦𝐞𝐝**\n\n"
         f"🔥 **𝐆𝐞𝐭 𝐭𝐡𝐞 𝐋𝐚𝐭𝐞𝐬𝐭 𝐓𝐫𝐚𝐝𝐢𝐧𝐠 𝐔𝐩𝐝𝐚𝐭𝐞𝐬, 𝐌𝐚𝐫𝐤𝐞𝐭 𝐀𝐧𝐚𝐥𝐲𝐬𝐢𝐬, 𝐒𝐢𝐠𝐧𝐚𝐥 𝐔𝐩𝐝𝐚𝐭𝐞𝐬, 𝐚𝐧𝐝 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥 𝐀𝐧𝐧𝐨𝐮𝐧𝐜𝐞𝐦𝐞𝐧𝐭𝐬.**\n\n"
         f"💎 **𝐘𝐨𝐮𝐫 𝐓𝐫𝐚𝐝𝐢𝐧𝐠 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 • 𝐎𝐧𝐞 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥 𝐏𝐥𝐚𝐜𝐞**\n\n"
-        f"👇 **𝐓𝐚𝐩 𝐭𝐡𝐞 𝐁𝐮𝐭𝐭𝐨𝐧 𝐁𝐞𝐥𝐨𝐰 𝐭𝐨 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐋 𝐂𝐡𝐚𝐧𝐧𝐞𝐥!** 📢"
+        f"👇 **𝐓𝐚𝐩 𝐭𝐡𝐞 𝐁𝐮𝐭𝐭𝐨𝐧 𝐁𝐞𝐥𝐨𝐰 𝐭𝐨 𝐉𝐨𝐢𝐧 𝐎𝐮𝐫 𝐎𝐟𝐟𝐢𝐜𝐢𝐚𝐥 𝐂𝐡𝐚𝐧𝐧𝐞𝐥!** 📢"
     )
     kb = InlineKeyboardMarkup([
         [InlineKeyboardButton("📢 𝐉𝐎𝐈𝐍 𝐎𝐅𝐅𝐈𝐂𝐈𝐀𝐋 𝐂𝐇𝐀𝐍𝐍𝐄𝐋", url=CHANNEL_LINK)],
@@ -431,7 +431,7 @@ async def cancel_verification(update: Update, context: ContextTypes.DEFAULT_TYPE
     return ConversationHandler.END
 
 # ==========================================
-# 📄 BUTTON HANDLERS & SIGNALS ENGINE (WITH LOADING & EXACT STYLISH POSTS)
+# 📄 BUTTON HANDLERS & SIGNALS ENGINE (SENDS NEW MESSAGE KEEPING DASHBOARD INTACT)
 # ==========================================
 async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -441,11 +441,13 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
     data = query.data
 
     if data == "otc_live":
-        await context.bot.edit_message_text(
-            "🔄 **𝐒𝐜𝐚𝐧𝐧𝐢𝐧𝐠 𝐌𝐚𝐫𝐤𝐞𝐭 𝐕𝐨𝐥𝐚𝐭𝐢𝐥𝐢𝐭𝐲 & 𝐓𝐞𝐜𝐡𝐧𝐢𝐜𝐚𝐥 𝐈𝐧𝐝𝐢𝐜𝐚𝐭𝐨𝐫𝐬...** 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳",
-            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
+        loading_msg = await context.bot.send_message(
+            chat_id=chat_id,
+            text="🔄 **𝐒𝐜𝐚𝐧𝐧𝐢𝐧𝐠 𝐌𝐚𝐫𝐤𝐞𝐭 𝐕𝐨𝐥𝐚𝐭𝐢𝐥𝐢𝐭𝐲 & 𝐓𝐞𝐜𝐡𝐧𝐢𝐜𝐚𝐥 𝐈𝐧𝐝𝐢𝐜𝐚𝐭𝐨𝐫𝐬...** 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳",
+            parse_mode="Markdown"
         )
         await asyncio.sleep(1)
+        await context.bot.delete_message(chat_id=chat_id, message_id=loading_msg.message_id)
         
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
@@ -464,14 +466,16 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
             [InlineKeyboardButton("🔄 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐍𝐄𝐖 𝐒𝐈𝐆𝐍𝐀𝐋", callback_data="otc_live")],
             [InlineKeyboardButton("🔙 𝐌𝐀𝐈𝐍 𝐌𝐄𝐍𝐔", callback_data="back_home")]
         ])
-        await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown")
+        await context.bot.send_message(chat_id=chat_id, text=resp_text, reply_markup=kb, parse_mode="Markdown")
 
     elif data == "analysis_signals":
-        await context.bot.edit_message_text(
-            "🔄 **𝐀𝐧𝐚𝐥𝐲𝐳𝐢𝐧𝐠 𝐎𝐓𝐂 𝐌𝐚𝐫𝐤𝐞𝐭 𝐓𝐫𝐞𝐧𝐝𝐬 & 𝐏𝐫𝐢𝐜𝐞 𝐀𝐜𝐭𝐢𝐨𝐧...** 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳",
-            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
+        loading_msg = await context.bot.send_message(
+            chat_id=chat_id,
+            text="🔄 **𝐀𝐧𝐚𝐥𝐲𝐳𝐢𝐧𝐠 𝐎𝐓𝐂 𝐌𝐚𝐫𝐤𝐞𝐭 𝐓𝐫𝐞𝐧𝐝𝐬 & 𝐏𝐫𝐢𝐜𝐞 𝐀𝐜𝐭𝐢𝐨𝐧...** 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳",
+            parse_mode="Markdown"
         )
         await asyncio.sleep(1)
+        await context.bot.delete_message(chat_id=chat_id, message_id=loading_msg.message_id)
         
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
@@ -489,7 +493,7 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
             [InlineKeyboardButton("🔄 𝐆𝐄𝐍𝐄𝐑𝐀𝐓𝐄 𝐍𝐄𝐖 𝐒𝐈𝐆𝐍𝐀𝐋", callback_data="analysis_signals")],
             [InlineKeyboardButton("🔙 𝐌𝐀𝐈𝐍 𝐌𝐄𝐍𝐔", callback_data="back_home")]
         ])
-        await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown")
+        await context.bot.send_message(chat_id=chat_id, text=resp_text, reply_markup=kb, parse_mode="Markdown")
 
     elif data == "ai_signals_pro":
         resp_text = (
@@ -515,11 +519,13 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown", disable_web_page_preview=True)
 
     elif data == "future_signals":
-        await context.bot.edit_message_text(
-            "🔄 **𝐒𝐲𝐧𝐜𝐢𝐧𝐠 𝐏𝐚𝐤𝐢𝐬𝐭𝐚𝐧 𝐋𝐨𝐜𝐚𝐥 𝐓𝐢𝐦𝐞 & 𝐅𝐮𝐭𝐮𝐫𝐞 𝐌𝐚𝐫𝐤𝐞𝐭 𝐏𝐫𝐞𝐝𝐢𝐜𝐭𝐢𝐨𝐧𝐬...** 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳",
-            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
+        loading_msg = await context.bot.send_message(
+            chat_id=chat_id,
+            text="🔄 **𝐒𝐲𝐧𝐜𝐢𝐧𝐠 𝐏𝐚𝐤𝐢𝐬𝐭𝐚𝐧 𝐋𝐨𝐜𝐚𝐥 𝐓𝐢𝐦𝐞 & 𝐅𝐮𝐭𝐮𝐫𝐞 𝐌𝐚𝐫𝐤𝐞𝐭 𝐏𝐫𝐞𝐝𝐢𝐜𝐭𝐢𝐨𝐧𝐬...** 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳",
+            parse_mode="Markdown"
         )
         await asyncio.sleep(1)
+        await context.bot.delete_message(chat_id=chat_id, message_id=loading_msg.message_id)
         
         now_pkt = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         t1 = (now_pkt + datetime.timedelta(minutes=5)).strftime("%I:%M %p")
@@ -550,7 +556,7 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
             [InlineKeyboardButton("🔄 𝐑𝐄𝐅𝐑𝐄𝐒𝐇 𝐒𝐂𝐇𝐄𝐃𝐔𝐋𝐄", callback_data="future_signals")],
             [InlineKeyboardButton("🔙 𝐌𝐀𝐈𝐍 𝐌𝐄𝐍𝐔", callback_data="back_home")]
         ])
-        await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown")
+        await context.bot.send_message(chat_id=chat_id, text=resp_text, reply_markup=kb, parse_mode="Markdown")
 
     elif data == "future_list":
         resp_text = (
@@ -710,7 +716,7 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
     elif data == "tournament_joining":
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
-            f"🏆 **𝐓𝐎𝐔𝐑𝐍𝐀𝐌𝐄𝐍𝐓 𝐉𝐎𝐈𝐍𝐈𝐍𝐆 & 𝐏𝐑𝐈𝐙𝐄𝐒 𝐆𝐔𝐈𝐃𝐀𝐍𝐂𝐄** 🏆\n\n"
+            f"🏆 **𝐓𝐎𝐔𝐑𝐍𝐀𝐌𝐄𝐍𝐓 𝐉𝐎𝐈𝐍𝐈𝐍𝐠 & 𝐏𝐑𝐈𝐙𝐄𝐒 𝐆𝐔𝐈𝐃𝐀𝐍𝐂𝐄** 🏆\n\n"
             f"✨ Participate in official platform trading tournaments to win cash prizes up to $10,000!\n\n"
             f"• Check eligibility requirements and register via our official affiliate portal.\n"
             f"• Contact admin for special tournament strategy support and competition tips.\n"
