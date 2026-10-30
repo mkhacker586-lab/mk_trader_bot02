@@ -431,7 +431,7 @@ async def cancel_verification(update: Update, context: ContextTypes.DEFAULT_TYPE
     return ConversationHandler.END
 
 # ==========================================
-# 📄 BUTTON HANDLERS & SIGNALS ENGINE
+# 📄 BUTTON HANDLERS & SIGNALS ENGINE (INSTANT & SMOOTH)
 # ==========================================
 async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -441,16 +441,10 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
     data = query.data
 
     if data == "otc_live":
-        await context.bot.edit_message_text(
-            "🔄 **Scanning Market Volatility & Technical Indicators...** Please wait ⏳",
-            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
-        )
-        await asyncio.sleep(1)
-        
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
             f"📊 **𝐎𝐓𝐂 𝐋𝐈𝐕𝐄 𝐒𝐈𝐆𝐍𝐀𝐋𝐒 𝐄𝐍𝐆𝐈𝐍𝐄** 📊\n\n"
-            f"✨ Welcome to the professional OTC live trading hub. Here you receive high-accuracy real-time signals optimized for current market session.\n\n"
+            f"✨ High-accuracy real-time signals optimized for current market session.\n\n"
             f"💎 **Asset:** USD/PHP (OTC)\n"
             f"🟢 **Direction:** CALL (BUY) 📈\n"
             f"🕒 **Entry Time:** Next Candle / 1 Minute Expiry\n"
@@ -467,12 +461,6 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown")
 
     elif data == "analysis_signals":
-        await context.bot.edit_message_text(
-            "🔄 **Analyzing OTC Market Trends & Price Action...** Please wait ⏳",
-            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
-        )
-        await asyncio.sleep(1)
-        
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
             f"📈 **𝐀𝐍𝐀𝐋𝐘𝐒𝐈𝐒 𝐒𝐈𝐆𝐍𝐀𝐋𝐒 𝐇𝐔𝐁** 📈\n\n"
@@ -515,29 +503,29 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown", disable_web_page_preview=True)
 
     elif data == "future_signals":
-        await context.bot.edit_message_text(
-            "🔄 **Syncing Pakistan Local Time & Future Market Predictions...** Please wait ⏳",
-            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
-        )
-        await asyncio.sleep(1)
-        
         now_pkt = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         t1 = (now_pkt + datetime.timedelta(minutes=5)).strftime("%I:%M %p")
-        t2 = (now_pkt + datetime.timedelta(minutes=20)).strftime("%I:%M %p")
-        t3 = (now_pkt + datetime.timedelta(minutes=35)).strftime("%I:%M %p")
-        t4 = (now_pkt + datetime.timedelta(minutes=50)).strftime("%I:%M %p")
-        t5 = (now_pkt + datetime.timedelta(minutes=65)).strftime("%I:%M %p")
+        t2 = (now_pkt + datetime.timedelta(minutes=15)).strftime("%I:%M %p")
+        t3 = (now_pkt + datetime.timedelta(minutes=25)).strftime("%I:%M %p")
+        t4 = (now_pkt + datetime.timedelta(minutes=35)).strftime("%I:%M %p")
+        t5 = (now_pkt + datetime.timedelta(minutes=45)).strftime("%I:%M %p")
+        t6 = (now_pkt + datetime.timedelta(minutes=55)).strftime("%I:%M %p")
+        t7 = (now_pkt + datetime.timedelta(minutes=65)).strftime("%I:%M %p")
+        t8 = (now_pkt + datetime.timedelta(minutes=75)).strftime("%I:%M %p")
         
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
-            f"🔮 **𝐅𝐔𝐓𝐔𝐑𝐄 𝐒𝐈𝐆𝐍𝐀𝐋𝐒 𝐒𝐂𝐇𝐄𝐃𝐔𝐋𝐄** 🔮\n\n"
+            f"🔮 **𝟖 𝐅𝐔𝐓𝐔𝐑𝐄 𝐒𝐈𝐆𝐍𝐀𝐋𝐒 𝐒𝐂𝐇𝐄𝐃𝐔𝐋𝐄** 🔮\n\n"
             f"📅 **Date:** Today's Live Active Session\n"
             f"🌐 **Timezone:** Pakistan Standard Time (PKT)\n\n"
-            f"1. 🕒 **Time:** {t1} | 💎 **Pair:** GBP/USD (OTC) | 📈 **Direction:** UP (CALL)\n"
-            f"2. 🕒 **Time:** {t2} | 💎 **Pair:** EUR/JPY | 📈 **Direction:** DOWN (PUT)\n"
-            f"3. 🕒 **Time:** {t3} | 💎 **Pair:** AUD/CAD (OTC) | 📈 **Direction:** UP (CALL)\n"
-            f"4. 🕒 **Time:** {t4} | 💎 **Pair:** USD/BDT (OTC) | 📈 **Direction:** DOWN (PUT)\n"
-            f"5. 🕒 **Time:** {t5} | 💎 **Pair:** EUR/CAD | 📈 **Direction:** UP (CALL)\n\n"
+            f"1. 🕒 {t1} | 💎 GBP/USD (OTC) | 📈 UP (CALL)\n"
+            f"2. 🕒 {t2} | 💎 EUR/JPY | 📉 DOWN (PUT)\n"
+            f"3. 🕒 {t3} | 💎 AUD/CAD (OTC) | 📈 UP (CALL)\n"
+            f"4. 🕒 {t4} | 💎 USD/BDT (OTC) | 📉 DOWN (PUT)\n"
+            f"5. 🕒 {t5} | 💎 EUR/CAD | 📈 UP (CALL)\n"
+            f"6. 🕒 {t6} | 💎 NZD/USD (OTC) | 📉 DOWN (PUT)\n"
+            f"7. 🕒 {t7} | 💎 EUR/GBP | 📈 UP (CALL)\n"
+            f"8. 🕒 {t8} | 💎 USD/JPY (OTC) | 📉 DOWN (PUT)\n\n"
             f"⚠️ **Note:** Follow strict risk management and prepare your entries ahead of time."
         )
         kb = InlineKeyboardMarkup([
@@ -720,7 +708,7 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown", disable_web_page_preview=True)
 
     elif data in ["signal_win", "signal_loss"]:
-        result_title = "🎉 **𝐂𝐎𝐍𝐆𝐑𝐀𝐓𝐔𝐋𝐀𝐓𝐈𝐎𝐍𝐒! 𝐏𝐑𝐎𝐅𝐈𝐓 𝐑𝐄𝐂𝐎𝐑𝐃𝐄𝐃 (𝐖𝐈𝐍)**" if data == "signal_win" else "⚠️ **𝐋𝐎𝐒𝐒 𝐑𝐄𝐂𝐎𝐕𝐄𝐑𝐘 𝐍𝐄𝐄𝐃𝐄𝐃 - 𝐑𝐄𝐂𝐎𝐕𝐄𝐑 𝐈𝐍 𝐍𝐄𝐗𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍**"
+        result_title = "🎉 **𝐂𝐎𝐍𝐆𝐑𝐀𝐓𝐔𝐋𝐀𝐓𝐈𝐎𝐍𝐒! 𝐏𝐑𝐎𝐅𝐈𝐓 𝐑𝐄𝐂𝐎𝐑𝐃𝐄𝐃 (𝐖𝐈𝐍 🏆)**" if data == "signal_win" else "⚠️ **𝐋𝐎𝐒𝐒 𝐑𝐄𝐂𝐎𝐕𝐄𝐑𝐘 𝐍𝐄𝐄𝐃𝐄𝐃 - 𝐑𝐄𝐂𝐎𝐕𝐄𝐑 𝐈𝐍 𝐍𝐄𝐗𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍**"
         feedback_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
             f"{result_title}\n\n"
