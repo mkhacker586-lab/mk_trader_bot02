@@ -431,7 +431,7 @@ async def cancel_verification(update: Update, context: ContextTypes.DEFAULT_TYPE
     return ConversationHandler.END
 
 # ==========================================
-# 📄 BUTTON HANDLERS & SIGNALS ENGINE (INSTANT & SMOOTH)
+# 📄 BUTTON HANDLERS & SIGNALS ENGINE (WITH LOADING & EXACT STYLISH POSTS)
 # ==========================================
 async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -441,6 +441,12 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
     data = query.data
 
     if data == "otc_live":
+        await context.bot.edit_message_text(
+            "🔄 **Scanning Market Volatility & Technical Indicators...** Please wait ⏳",
+            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
+        )
+        await asyncio.sleep(1)
+        
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
             f"📊 **𝐎𝐓𝐂 𝐋𝐈𝐕𝐄 𝐒𝐈𝐆𝐍𝐀𝐋𝐒 𝐄𝐍𝐆𝐈𝐍𝐄** 📊\n\n"
@@ -461,6 +467,12 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown")
 
     elif data == "analysis_signals":
+        await context.bot.edit_message_text(
+            "🔄 **Analyzing OTC Market Trends & Price Action...** Please wait ⏳",
+            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
+        )
+        await asyncio.sleep(1)
+        
         resp_text = (
             f"👑 **{BOT_NAME}** 👑\n\n"
             f"📈 **𝐀𝐍𝐀𝐋𝐘𝐒𝐈𝐒 𝐒𝐈𝐆𝐍𝐀𝐋𝐒 𝐇𝐔𝐁** 📈\n\n"
@@ -503,6 +515,12 @@ async def button_callback_handler(update: Update, context: ContextTypes.DEFAULT_
         await context.bot.edit_message_text(resp_text, chat_id=chat_id, message_id=message_id, reply_markup=kb, parse_mode="Markdown", disable_web_page_preview=True)
 
     elif data == "future_signals":
+        await context.bot.edit_message_text(
+            "🔄 **Syncing Pakistan Local Time & Future Market Predictions...** Please wait ⏳",
+            chat_id=chat_id, message_id=message_id, parse_mode="Markdown"
+        )
+        await asyncio.sleep(1)
+        
         now_pkt = datetime.datetime.utcnow() + datetime.timedelta(hours=5)
         t1 = (now_pkt + datetime.timedelta(minutes=5)).strftime("%I:%M %p")
         t2 = (now_pkt + datetime.timedelta(minutes=15)).strftime("%I:%M %p")
